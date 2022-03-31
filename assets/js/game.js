@@ -1,5 +1,3 @@
-// alert player the game is starting
-window.alert("Welcome to Robot Gladiators!");
 // player chooses their name
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
@@ -90,21 +88,86 @@ var fight = function (enemyName) {
   } // end of while loop
 }; // end of fight function
 
-// fight();
+// function to start a new game
+var startGame = function () {
+  // reset player stats
+  playerHealth = 100;
+  playerAttack = 10;
+  playerMoney = 10;
 
-// Game States
-// "WIN" - Player robot has defeated all enemy-robots
-//    * Fight all enemy-robots
-//    * Defeat each enemy-robot
-// "LOSE" - Player robot's health is zero or less
+  for (var i = 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+      // alert player the game is starting
+      window.alert("Welcome to Robot Gladiators!");
 
-for (var i = 0; i < enemyNames.length; i++) {
-  // set logical var name
-  var pickedEnemyName = enemyNames[i];
+      // set logical var name
+      var pickedEnemyName = enemyNames[i];
 
-  // reset enemy health
-  enemyHealth = 50;
+      // reset enemy health
+      enemyHealth = 50;
 
-  // call fight function with enemy-robot
-  fight(pickedEnemyName);
-}
+      // call fight function with enemy-robot
+      fight(pickedEnemyName);
+    } else {
+      window.alert("You have lost your robot in battle! Game Over!");
+      break;
+    }
+  }
+
+  // play again
+  endGame();
+};
+
+var endGame = function () {
+  window.alert("The game has now ended. Let's see how you did!");
+
+  // if player is still alive, player wins!
+  if (playerHealth > 0) {
+    window.alert(
+      "Great job, you've survived the game! You now have a score of " +
+        playerMoney +
+        " ."
+    );
+  }
+
+  // if player is dead, player loses.
+  else {
+    window.alert("You've lost your robot in battle.");
+  }
+
+  // ask player if they'd like to play again
+  var playAgainConfirm = window.confirm("Would you like to play again?");
+
+  if (playAgainConfirm) {
+    // restart the game
+    startGame();
+  } else {
+    window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+  }
+};
+
+// start the game when the page loads
+startGame();
+
+// Wrap the game logic in a startGame() function
+
+// When the player is defeated or there are no more enemies, call an endGame() function
+
+/* The endGame() function
+
+  - Alerts the player's total stats
+  - Asks the player if they'd want to play again
+  - if yes, calls startGame() to restart the game
+*/
+
+/* After the player skips or defeats and enemy (and there are still robots to fight) then:
+
+  - Asks the player if they'd like to shop
+  - If not, continue as normal
+  - If so, call the shop() function
+  - The shop() function asks the player if they'd like to refill health, upgrade attack, or leave the shop
+  - If refill, subtract money from player and increase health
+  - If upgrade, subtract money and increase attack
+  - If leave, alert goodbye and exit the function
+  - If any other invalid option, call shop() again
+*/
