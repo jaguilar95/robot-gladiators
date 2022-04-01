@@ -37,8 +37,10 @@ var fight = function (enemyName) {
       }
     }
 
-    // enemy taking damage
-    enemyHealth = Math.max(0, enemyHealth - playerAttack);
+    // enemy taking random damage based on player's attack
+    var damage = randomNumber(playerAttack - 3, playerAttack);
+
+    enemyHealth = Math.max(0, enemyHealth - damage);
     console.log(
       playerName +
         " attacked " +
@@ -63,8 +65,10 @@ var fight = function (enemyName) {
       window.alert(enemyName + " still has " + enemyHealth + " health left.");
     }
 
-    // player takes damage
-    playerHealth = Math.max(0, playerHealth - enemyAttack);
+    // player takes random damage based on enemy's attack
+    var damage = randomNumber(enemyAttack - 3, enemyAttack);
+
+    playerHealth = Math.max(0, playerHealth - damage);
     console.log(
       enemyName +
         " attacked " +
@@ -104,7 +108,7 @@ var startGame = function () {
       var pickedEnemyName = enemyNames[i];
 
       // reset enemy health
-      enemyHealth = Math.floor(Math.random() * 21) + 40;
+      enemyHealth = randomNumber(40, 60);
 
       // call fight function with enemy-robot
       fight(pickedEnemyName);
@@ -201,6 +205,13 @@ var shop = function () {
       shop();
       break;
   }
+};
+
+// Creating random numbers within a min/max parameter range
+var randomNumber = function (min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1)) + min;
+
+  return value;
 };
 
 // start the game when the page loads
