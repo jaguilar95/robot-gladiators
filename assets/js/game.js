@@ -31,14 +31,14 @@ var fight = function (enemyName) {
         window.alert(playerName + " has decided to skip this fight. Goodbye!");
 
         // money penalty for quitting
-        playerMoney = playerMoney - 10;
+        playerMoney = Math.max(0, playerMoney - 10);
         console.log("playerMoney", playerMoney);
         break;
       }
     }
 
     // enemy taking damage
-    enemyHealth = enemyHealth - playerAttack;
+    enemyHealth = Math.max(0, enemyHealth - playerAttack);
     console.log(
       playerName +
         " attacked " +
@@ -64,7 +64,7 @@ var fight = function (enemyName) {
     }
 
     // player takes damage
-    playerHealth = playerHealth - enemyAttack;
+    playerHealth = Math.max(0, playerHealth - enemyAttack);
     console.log(
       enemyName +
         " attacked " +
@@ -104,7 +104,7 @@ var startGame = function () {
       var pickedEnemyName = enemyNames[i];
 
       // reset enemy health
-      enemyHealth = 50;
+      enemyHealth = Math.floor(Math.random() * 21) + 40;
 
       // call fight function with enemy-robot
       fight(pickedEnemyName);
@@ -206,14 +206,9 @@ var shop = function () {
 // start the game when the page loads
 startGame();
 
-/* After the player skips or defeats and enemy (and there are still robots to fight) then:
+/* 
 
-  - Asks the player if they'd like to shop
-  - If not, continue as normal
-  - If so, call the shop() function
-  - The shop() function asks the player if they'd like to refill health, upgrade attack, or leave the shop
-  - If refill, subtract money from player and increase health
-  - If upgrade, subtract money and increase attack
-  - If leave, alert goodbye and exit the function
-  - If any other invalid option, call shop() again
+  Use the Math object to add randomness to the game
+  Convert player and enemy data to custom objects
+
 */
