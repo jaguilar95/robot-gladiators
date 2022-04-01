@@ -1,28 +1,46 @@
+// Function to receive valid responses
+var fightOrSkip = function () {
+  // ask player if they'd like to fight or quit
+  var promptFight = window.prompt(
+    "Would you like to FIGHT or SKIP this battle? Enter either 'FIGHT' or 'SKIP' to choose."
+  );
+
+  // Conditional recursive for fight option
+  if (promptFight === "" || promptFight === null) {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return fightOrSkip();
+  }
+
+  promptFight = promptFight.toLowerCase();
+
+  // if player skips, confirm and stop loop
+  if (promptFight === "skip") {
+    // confirming player wants to skip
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+    // if yes (true), then leave fight
+    if (confirmSkip) {
+      window.alert(
+        playerInfo.name + " has decided to skip this fight. Goodbye!"
+      );
+
+      // money penalty for quitting
+      playerInfo.money = Math.max(0, playerInfo.money - 10);
+      console.log("Money:", playerInfo.money);
+
+      return true;
+    }
+  }
+  return false;
+};
+
 // fight function
 var fight = function (enemy) {
   // repeat and execute as long as the enemy-robot is alive
   while (playerInfo.health > 0 && enemy.health > 0) {
-    // ask player if they'd like to fight or quit
-    var promptFight = window.prompt(
-      "Would you like to FIGHT or SKIP this battle? Enter either 'FIGHT' or 'SKIP' to choose."
-    );
-
-    // if player skips
-    if (promptFight === "skip" || promptFight === "SKIP") {
-      // confirming player wants to skip
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-      // if yes (true), then leave fight
-      if (confirmSkip) {
-        window.alert(
-          playerInfo.name + " has decided to skip this fight. Goodbye!"
-        );
-
-        // money penalty for quitting
-        playerInfo.money = Math.max(0, playerInfo.money - 10);
-        console.log("playerInfo.money", playerInfo.money);
-        break;
-      }
+    // Ask player if they'd lik eto fight or skip
+    if (fightOrSkip()) {
+      break;
     }
 
     // enemy taking random damage based on player's attack
